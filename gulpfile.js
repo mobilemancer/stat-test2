@@ -62,7 +62,7 @@ const dr = dumber({
   //   for npm package file "node_modules/@scoped/foo/bar.js", the package name is "@scoped/foo"
 
   // Here we skip code splitting in test mode.
-  codeSplit: isTest ? undefined : function(moduleId, packageName) {
+  codeSplit: isTest ? undefined : function (moduleId, packageName) {
     // Here for any local src, put into app-bundle
     if (!packageName) return 'app-bundle';
     // The codeSplit func does not need to return a valid bundle name.
@@ -81,19 +81,21 @@ const dr = dumber({
   //   "other-bundle.js": "other-bundle.js"
   // }
   // If you turned on hash, you need this callback to update index.html
-  onManifest: isTest ? undefined : function(filenameMap) {
+  onManifest: isTest ? undefined : function (filenameMap) {
     // Update index.html entry-bundle.js with entry-bundle.hash...js
     console.log('Update index.html with ' + filenameMap['entry-bundle.js']);
     const indexHtml = fs.readFileSync('_index.html').toString()
       .replace('entry-bundle.js', filenameMap['entry-bundle.js']);
 
     fs.writeFileSync('index.html', indexHtml);
+    fs.writeFileSync('dist/index.html', indexHtml);
+
   }
 });
 
 function buildJs(src) {
-  const ts = typescript.createProject('tsconfig.json', {noEmitOnError: true});
-  return gulp.src(src, {sourcemaps: !isProduction})
+  const ts = typescript.createProject('tsconfig.json', { noEmitOnError: true });
+  return gulp.src(src, { sourcemaps: !isProduction })
     .pipe(gulpif(!isProduction && !isTest, plumber()))
     .pipe(au2())
     .pipe(ts());
@@ -106,7 +108,7 @@ function buildHtml(src) {
 }
 
 function buildCss(src) {
-  return gulp.src(src, {sourcemaps: !isProduction})
+  return gulp.src(src, { sourcemaps: !isProduction })
     .pipe(postcss([
       autoprefixer(),
       // use postcss-url to inline any image/font/svg.
@@ -115,7 +117,7 @@ function buildCss(src) {
       // some browsers.
       // Here we enforce base64 encoding for all assets to
       // improve compatibility on svg.
-      postcssUrl({url: 'inline', encodeType: 'base64'})
+      postcssUrl({ url: 'inline', encodeType: 'base64' })
     ]));
 }
 
@@ -130,15 +132,17 @@ function build() {
     buildHtml('src/**/*.html'),
     buildCss('src/**/*.css')
   )
-  // Note we did extra call `dr()` here, this is designed to cater watch mode.
-  // dumber here consumes (swallows) all incoming Vinyl files,
-  // then generates new Vinyl files for all output bundle files.
-  .pipe(dr())
-  // Terser fast minify mode
-  // https://github.com/terser-js/terser#terser-fast-minify-mode
-  // It's a good balance on size and speed to turn off compress.
-  .pipe(gulpif(isProduction, terser({compress: false})))
-  .pipe(gulp.dest(dist, {sourcemaps: isProduction ? false : '.'}));
+    // Note we did extra call `dr()` here, this is designed to cater watch mode.
+    // dumber here consumes (swallows) all incoming Vinyl files,
+    // then generates new Vinyl files for all output bundle files.
+    .pipe(dr())
+    // Terser fast minify mode
+    // https://github.com/terser-js/terser#terser-fast-minify-mode
+    // It's a good balance on size and speed to turn off compress.
+    .pipe(gulpif(isProduction, terser({ compress: false })))
+    .pipe(gulp.dest(dist, { sourcemaps: isProduction ? false : '.' }))
+    .pipe(gulp.src("./index.html").pipe(gulp.dest("./dist/")));
+
 }
 
 function clean() {
