@@ -84,11 +84,13 @@ const dr = dumber({
   onManifest: isTest ? undefined : function (filenameMap) {
     // Update index.html entry-bundle.js with entry-bundle.hash...js
     console.log('Update index.html with ' + filenameMap['entry-bundle.js']);
-    const indexHtml = fs.readFileSync('_index.html').toString()
+    const indexHtml = fs.readFileSync('_index_dev.html').toString()
       .replace('entry-bundle.js', filenameMap['entry-bundle.js']);
-
     fs.writeFileSync('index.html', indexHtml);
-    fs.writeFileSync('dist/index.html', indexHtml);
+
+    const indexHtmlProd = fs.readFileSync('_index.html').toString()
+      .replace('entry-bundle.js', filenameMap['entry-bundle.js']);
+    fs.writeFileSync('dist/index.html', indexHtmlProd);
 
   }
 });
