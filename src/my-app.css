@@ -16,3 +16,13 @@ a:hover {
 .load-active {
   background-color: lightgray;
 }
+
+.main-viewport {
+  width: 70%;
+  display: inline-block;
+}
+
+.edit-viewport {
+  width: 25%;
+  display: inline-block;
+}

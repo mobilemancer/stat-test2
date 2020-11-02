@@ -1,12 +1,15 @@
 <import from="./welcome"></import>
 <import from="./about.html"></import>
 <import from="./missing"></import>
-<import from="./products/products"
+<import from="./products/products"></import>
+<import from="./products/edit/edit"></import>
 
 <nav>
-  <a load="welcome">Welcome</a>
-  <a load="about">About</a>
-  <a load="products">Products</a>
+  <a load="welcome@main-viewport">Welcome</a>
+  <a load="about@main-viewport">About</a>
+  <a load="products@main-viewport">Products</a>
+  <a load="edit@edit-viewport">Edit</a>
 </nav>
 
-<au-viewport default="welcome" fallback="missing"></au-viewport>
+<au-viewport class="main-viewport" name="main-viewport" default="welcome" fallback="missing"></au-viewport>
+<au-viewport class="edit-viewport" name="edit-viewport" used-by="edit" default=""></au-viewport>

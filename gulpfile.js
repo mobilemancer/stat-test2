@@ -32,6 +32,9 @@ const dr = dumber({
     const indexHtmlProd = fs.readFileSync('_index.html').toString()
       .replace('entry-bundle.js', filenameMap['entry-bundle.js']);
     fs.writeFileSync('dist/index.html', indexHtmlProd);
+
+    const routes = fs.readFileSync('routes.json').toString();
+    fs.writeFileSync('dist/routes.json', routes);
   }
 });
 
