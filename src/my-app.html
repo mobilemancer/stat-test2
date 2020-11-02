@@ -5,11 +5,20 @@
 <import from="./products/edit/edit"></import>
 
 <nav>
-  <a load="welcome@main-viewport">Welcome</a>
-  <a load="about@main-viewport">About</a>
-  <a load="products@main-viewport">Products</a>
+  <a load="welcome@main-viewport+-@edit-viewport">Welcome</a>
+  <a load="about@main-viewport+-@edit-viewport">About</a>
+  <a load="products@main-viewport+-@edit-viewport">Products</a>
   <a load="edit@edit-viewport">Edit</a>
 </nav>
 
-<au-viewport class="main-viewport" name="main-viewport" default="welcome" fallback="missing"></au-viewport>
-<au-viewport class="edit-viewport" name="edit-viewport" used-by="edit" default=""></au-viewport>
+<div class="viewport-container">
+  <au-viewport
+    class="main-viewport"
+    name="main-viewport"
+    default="welcome"
+    fallback="missing"
+    no-link
+  ></au-viewport>
+
+  <au-viewport class="edit-viewport" name="edit-viewport" used-by="edit" no-link></au-viewport>
+</div>

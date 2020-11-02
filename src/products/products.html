@@ -4,7 +4,9 @@
   <p>Model: ${product.model}</p>
   <p>Manufacturer: ${product.manufacturer}</p>
   <p>Price: ${product.price}</p>
-  <a load="edit@edit-viewport"><button>Edit</button></a>
+  <!-- <a load.bind="[{ component: 'edit', context:'..', parameters: { product } }]"> -->
+  <button click.trigger="edit(product)">Edit</button>
+  <!-- </a> -->
 </div>
 
 <edit></edit>

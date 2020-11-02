@@ -17,6 +17,10 @@ a:hover {
   background-color: lightgray;
 }
 
+.viewport-container {
+  display: flex;
+}
+
 .main-viewport {
   width: 70%;
   display: inline-block;

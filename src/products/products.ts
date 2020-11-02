@@ -1,5 +1,4 @@
-import { HttpClient } from "aurelia";
-// import { Edit } from "./edit/edit";
+import { HttpClient, json } from "aurelia";
 
 export class Products {
   public products = [];
@@ -15,13 +14,25 @@ export class Products {
     return true;
   }
 
-  public edit(args) {
-    console.log(args);
-    // this.router.load(new Edit(args));
+  public async edit(product) {
+    console.log(product);
+    let editUrl =
+      window.location.hostname === "localhost" ? "http://localhost:7071/api/editproduct" : "/api/editproduct";
+
+    const response = await this.editProduct(editUrl, product);
+    console.log(response);
   }
 
   private async requestProducts(url: string) {
     const response = await this.httpClient.fetch(url, {});
+    return await response.json();
+  }
+
+  private async editProduct(url: string, product: object) {
+    const response = await this.httpClient.fetch(url, {
+      method: "post",
+      body: json(product),
+    });
     return await response.json();
   }
 }
