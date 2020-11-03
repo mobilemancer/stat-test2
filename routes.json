@@ -1,11 +1,11 @@
 {
   "routes": [
     {
-      "route": "/api/GetProducts",
+      "route": "/api/getproducts",
       "allowedRoles": ["anonymous"]
     },
     {
-      "route": "/api/EditProduct",
+      "route": "/api/editproduct",
       "allowedRoles": ["authenticated"]
     }
   ]
